@@ -39,7 +39,7 @@ export const getFilteredAdverts = async (req, res) => {
   
 
   try {
-    const adverts = await Advert.find(filter).populate('user', 'name email');
+    const adverts = await Advert.find(filter).populate('user', 'firstName lastName email');
     res.json(adverts);
   } catch (error) {
     res.status(500).json({ error: error.message });
