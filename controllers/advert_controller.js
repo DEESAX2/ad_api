@@ -81,7 +81,7 @@ export const patchAdvert = async (req, res) => {
 // get advert by a specific user
 export const getMyAdverts = async (req, res) => {
   try {
-    const adverts = await Advert.find({ user: req.user.id }.populate('user', 'firstName lastName email'));
+    const adverts = await Advert.find({ user: req.user.id });
     res.json(adverts);
   } catch (error) {
     res.status(500).json({ error: error.message });
