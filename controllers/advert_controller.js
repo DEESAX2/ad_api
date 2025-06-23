@@ -69,7 +69,7 @@ export const getAdvertById = async (req, res) => {
 // this is to update the details of an advert 
 export const patchAdvert = async (req, res) => {
   try {
-    const advert = await Advert.findByIdAndUpdate(req.params.id, req.body, { new: true }.populate('user', 'firstName lastName email'));
+    const advert = await Advert.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!advert) return res.status(404).json({ message: 'this advert cannot be found' });
     res.json(advert);
   } catch (error) {
@@ -91,7 +91,7 @@ export const getMyAdverts = async (req, res) => {
 // to delete adverts only owned by a specific user 
 export const deleteMyAdvert = async (req, res) => {
   try {
-    const advert= await Advert.findById(req.params.id).populate('user', 'firstName lastName email');
+    const advert= await Advert.findById(req.params.id);
     if (!advert) {
       return res.status(404).json({ message: 'Advert not found' });
     }
