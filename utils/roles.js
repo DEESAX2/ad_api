@@ -2,6 +2,14 @@
 export const roles = [
 
    {
+    role: "customer",
+    permissions:[
+        'getAllServices',
+        'getServiceById',
+    ]
+   },
+
+    {
     role: "vendor",
     permissions:[
         'postService',
@@ -9,24 +17,9 @@ export const roles = [
         'getServiceById',
         'getMyServices',
         'deleteMyService',
-        'patchService'   
-    ],
-   },
-   {
-
-    role: "customer",
-    permissions:[
-        'getAllServices',
-        'getServiceById',
+        'patchService',  
     ]
-   }
+   },
+
 ];
 
-export function checkPermission (role, action){
-    if (role === 'vendor') {
-        return permission.vendor.includes(action);
-    } else if (role === 'customer') {
-        return permission.customer.includes(action);
-    }
-    return false;
-}
