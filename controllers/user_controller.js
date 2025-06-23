@@ -16,7 +16,7 @@ const otpGenerator = (length = 5) => {
 };
 
 export const signUp = async (req, res) => {
-    const { firstName, lastName, email, password,confirmPassword, role } = req.body;
+    const { firstName, lastName, email, password,confirmPassword, role, otp} = req.body;
 
     const {error, value} = signUpSchema.validate(req.body);
     if(error){
@@ -89,12 +89,12 @@ export const loginUser = async (req, res) => {
         // validates if the email from the user exist in the database
         const user = await User.findOne({ email: req.body.email });
         if (!user)
-            return res.status(401).json({ message: 'Invalid credentials' });
+            return res.status(401).json({ message: 'Incorrect email or password' });
 
         // compares the password from the user to the one in the database
         const isValidPassword = await bcrypt.compare(req.body.password, user.password);
         if (!isValidPassword)
-            return res.status(401).json({ message: 'Invalid credentials' });
+            return res.status(401).json({ message: 'Incorrect email or password' });
 
         // if both password and email are valid, generate a JWT token to be use for authentication. here the user's id and role, secret key with an expiring period of 1hr is embedded in the token.
         const token = jwt.sign({ id: user.id, role: user.role }, secret, { expiresIn: '1h' });

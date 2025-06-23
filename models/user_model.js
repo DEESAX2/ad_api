@@ -21,8 +21,13 @@ const userSchema = new Schema({
     role:{
         type: String,
         enum:['vendor','customer'],
-        required: true
+        required: true,
+        default: 'customer'
     },
+    otp:{
+        type: String, 
+    },
+
 },{timestamps: true});
 
 userSchema.plugin(normalize)
