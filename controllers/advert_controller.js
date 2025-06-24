@@ -101,7 +101,7 @@ export const deleteMyAdvert = async (req, res) => {
       return res.status(403).json({ message: 'You are not allowed to delete this advert. this advert is not yours to delete !!!' });
     }
 
-    await advert.remove();
+    await Advert.deleteOne({ _id: advert._id });
     res.json({ message: 'advert deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
