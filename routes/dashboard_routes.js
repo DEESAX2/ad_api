@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getDashboard, getVendorDashboard } from '../controllers/dashboard_controller.js';
+import { getVendorDashboard } from '../controllers/dashboard_controller.js';
 import { authenticate, hasPermission } from '../middlewares/auth.js';
 
 
