@@ -48,11 +48,11 @@ export const signUp = async (req, res) => {
         // show otp in console.log
         console.log("otp", otp);
 
-        const image = req.file
+        // const image = req.file
         const saveUserData = await User.create({
             ...value,
             password:hashPassword,
-            image: image.path
+            // image: image.path
         });
 
         // show the saved user details in the console

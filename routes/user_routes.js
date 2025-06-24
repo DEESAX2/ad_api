@@ -8,7 +8,7 @@ export const UserRouter = Router();
 
 
 
-UserRouter.post('/signup',parser.single("image"), signUp);
+UserRouter.post('/signup', signUp);
 UserRouter.patch('/update', authenticate, parser.single("image"), updateUser);
 
 
