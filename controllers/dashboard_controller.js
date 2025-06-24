@@ -1,43 +1,43 @@
 import { User } from '../models/user_model.js';
 import { Advert } from '../models/advert_model.js';
 
-export const getDashboard = async (req, res) => {
-  try {
-    const totalUsers = await User.countDocuments();
-    const totalVendors = await User.countDocuments({ role: 'vendor' });
-    const totalCustomers = await User.countDocuments({ role: 'customer' });
+// export const getDashboard = async (req, res) => {
+//   try {
+//     const totalUsers = await User.countDocuments();
+//     const totalVendors = await User.countDocuments({ role: 'vendor' });
+//     const totalCustomers = await User.countDocuments({ role: 'customer' });
 
-    const totalAdverts = await Advert.countDocuments();
+//     const totalAdverts = await Advert.countDocuments();
 
-    const advertsPerCategory = await Advert.aggregate([
-      {
-        $group: {
-          _id: '$category',
-          count: { $sum: 1 }
-        }
-      }
-    ]);
+//     const advertsPerCategory = await Advert.aggregate([
+//       {
+//         $group: {
+//           _id: '$category',
+//           count: { $sum: 1 }
+//         }
+//       }
+//     ]);
 
-    const recentAdverts = await Advert.find()
-      .sort({ createdAt: -1 })
-      .limit(5)
-      .populate('user', 'firstName lastName email');
+//     const recentAdverts = await Advert.find()
+//       .sort({ createdAt: -1 })
+//       .limit(5)
+//       .populate('user', 'firstName lastName email');
 
-    res.json({
-      summary: {
-        totalUsers,
-        totalVendors,
-        totalCustomers,
-        totalAdverts
-      },
-      categoryStats: advertsPerCategory,
-      recentAdverts
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to load dashboard' });
-  }
-};
+//     res.json({
+//       summary: {
+//         totalUsers,
+//         totalVendors,
+//         totalCustomers,
+//         totalAdverts
+//       },
+//       categoryStats: advertsPerCategory,
+//       recentAdverts
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: 'Failed to load dashboard' });
+//   }
+// };
 
 
 
