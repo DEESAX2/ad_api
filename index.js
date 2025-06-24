@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 import "dotenv/config"
 import cors from "cors"
 import { AdvertRouter } from './routes/advert_routes.js'
+import { dashboardRouter } from './routes/dashboard_routes.js'
 
 
 const PORT = process.env.PORT || 8000;
@@ -20,6 +21,7 @@ app.use(cors())
 
 app.use('/api/v1/users', UserRouter)
 app.use('/api/v1', AdvertRouter)
+app.use('/api/v1/dashboard', dashboardRouter)
 
 
 app.listen(PORT, () => {

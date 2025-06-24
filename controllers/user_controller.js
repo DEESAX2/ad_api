@@ -4,6 +4,7 @@ import { User } from "../models/user_model.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { signUpSchema } from "../schema/user_schema.js";
+import { Advert } from "../models/advert_model.js";
 
 
 
@@ -15,8 +16,10 @@ const otpGenerator = (length = 5) => {
     return otp;
 };
 
+
+
 export const signUp = async (req, res) => {
-    const { firstName, lastName, email, password,confirmPassword, role, otp} = req.body;
+    const { firstName, lastName, email, password,confirmPassword, role} = req.body;
 
     const {error, value} = signUpSchema.validate(req.body);
     if(error){
@@ -45,20 +48,11 @@ export const signUp = async (req, res) => {
         // show otp in console.log
         console.log("otp", otp);
 
-        // save the new user details in the database using the format below.
-        // const saveUserData = await User.create({
-        //     firstName,
-        //     lastName,
-        //     email,
-        //     password: hashPassword,
-        //     role: role,
-        //     otp: otp,
-        //     otpExpiresAt: new Date(Date.now() + 5 * 60 * 1000)
-        // });
-
+        const image = req.file
         const saveUserData = await User.create({
             ...value,
-            password:hashPassword
+            password:hashPassword,
+            image: image.path
         });
 
         // show the saved user details in the console
@@ -68,10 +62,10 @@ export const signUp = async (req, res) => {
         await sendOtpEmail(email,otp)
         console.log("otp sent to email", email)
 
-        // secrete key with jwt
+        // secret key with jwt
         console.log(`Secret key: ${secret}`)
 
-        // generate a token with user id and role, and the secret key is embedded in it after the signup....this will last for 2 hours
+    
         const token = jwt.sign(
             { id: saveUserData.id, role: saveUserData.role },
             secret,
@@ -81,6 +75,7 @@ export const signUp = async (req, res) => {
         return res.status(201).json({ user: saveUserData, token: token });
 
     };
+    
 };
 
 
@@ -104,4 +99,48 @@ export const loginUser = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Error logging in user' });
     }
+};
+
+// // this is to update a user's details 
+// export const patchUser = async (req, res) => {
+//   const id = req.params.id;
+//   try {
+//     res.status(200).json(await User.findByIdAndUpdate(id, req.body, { new: true }));
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+export const updateUser = async (req, res) => {
+  try {
+    const userId = req.user.id; // assumes authMiddleware adds this
+    const updates = req.body;
+
+    delete updates.password
+    delete updates.confirmPassword
+    delete updates.user
+
+    updates.user = req.user.id;
+
+    // If a new profile image is uploaded
+    if (req.file) {
+      updates.image = req.file.path;
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updates, {
+      new: true,
+      runValidators: true
+    });
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({
+      message: 'User updated successfully',
+      user: updatedUser
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to update user' });
+  }
 };

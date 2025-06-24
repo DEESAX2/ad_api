@@ -17,7 +17,8 @@ export const roles = [
         'getServiceById',
         'getMyServices',
         'deleteMyService',
-        'patchService',  
+        'patchService', 
+        'getMydashboard',
     ]
    },
 

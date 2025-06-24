@@ -7,5 +7,5 @@ export const advertSchema = Joi.object({
     description: Joi.string().required(),
     price: Joi.number(),
     image: Joi.string(),
-    category: Joi.string().valid('Tech & Programming', 'Artisans', 'Food & Beverages', 'Education & Training', 'Virtual Assistants', 'Other' ).required(),
+    category: Joi.string().valid('Tech & Programming', 'Artisans', 'Food & Beverages', 'Education & Training', 'Health & Wellness' ).required(),
 })

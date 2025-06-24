@@ -15,6 +15,12 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
+    phone:{
+        type: String,
+    },
+    address:{
+        type: String,
+    },
     password:{
         type: String,
         required: true
@@ -25,9 +31,9 @@ const userSchema = new Schema({
         required: true,
         default: 'customer'
     },
-    otp:{
+    image:{
         type: String, 
-    },
+    }
 
 },{timestamps: true});
 

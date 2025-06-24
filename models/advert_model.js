@@ -31,7 +31,7 @@ const advertSchema = new Schema({
       'Artisans',
       'Food & Beverages',
       'Education & Training',
-      'Virtual Assistants'],
+      'Health & Wellness'],
         required: true
     },
     user:{

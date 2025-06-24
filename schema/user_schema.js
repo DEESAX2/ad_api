@@ -5,7 +5,8 @@ export const userSchema = Joi.object({
     lastName: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().min(5).max(1024).required(),
-    role: Joi.string().valid('vendor', 'customer').default('customer')
+    role: Joi.string().valid('vendor', 'customer').default('customer'),
+    image: Joi.string(),
 });
 
 export const signUpSchema = Joi.object({
@@ -15,6 +16,7 @@ export const signUpSchema = Joi.object({
     role: Joi.string().valid('vendor', 'customer').default('vendor'),
     password: Joi.string().min(5).max(1024).required(),
     confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
+    image: Joi.string(),
 })
 
 export const loginSchema = Joi.object({
