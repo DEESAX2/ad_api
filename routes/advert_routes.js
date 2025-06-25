@@ -8,9 +8,9 @@ export const AdvertRouter = Router();
 
 
 
-AdvertRouter.post("/", authenticate, hasPermission("postService"), parser.single("image"), createAdvert);
+AdvertRouter.post("/add", authenticate, hasPermission("postService"), parser.single("image"), createAdvert);
 AdvertRouter.get("/filtered/adverts", getFilteredAdverts);
-AdvertRouter.get("/", getAllAdverts);
+AdvertRouter.get("/all/adverts", getAllAdverts);
 AdvertRouter.get("/my/adverts", authenticate, hasPermission("getMyServices"),getMyAdverts);
 AdvertRouter.get("/:id", getAdvertById);
 AdvertRouter.patch("/:id", authenticate, hasPermission("patchService"), patchAdvert);
