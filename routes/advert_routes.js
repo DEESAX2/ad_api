@@ -12,6 +12,6 @@ AdvertRouter.post("/add", authenticate, hasPermission("postService"), parser.sin
 AdvertRouter.get("/filtered/adverts", getFilteredAdverts);
 AdvertRouter.get("/all/adverts", getAllAdverts);
 AdvertRouter.get("/my/adverts", authenticate, hasPermission("getMyServices"),getMyAdverts);
-AdvertRouter.get("/:id", getAdvertById);
-AdvertRouter.patch("/:id", authenticate, hasPermission("patchService"), patchAdvert);
-AdvertRouter.delete("/:id", authenticate, hasPermission("deleteMyService"), deleteMyAdvert);
+AdvertRouter.get("/one/advert/:id", getAdvertById);
+AdvertRouter.patch("/update/:id", authenticate, hasPermission("patchService"), patchAdvert);
+AdvertRouter.delete("/delete/:id", authenticate, hasPermission("deleteMyService"), deleteMyAdvert);
